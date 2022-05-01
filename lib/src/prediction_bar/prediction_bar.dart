@@ -14,6 +14,7 @@ class PredictionBar<T extends Object> extends StatelessWidget {
     required this.onSuggestionSelected,
     this.paddingBar = const EdgeInsets.all(20.0),
     this.paddingListResults = const EdgeInsets.all(10.0),
+    this.validateButtonStyle,
     this.width = 500,
   }) : super(key: key) {
     this.focusNode = focusNode ?? FocusNode();
@@ -26,6 +27,7 @@ class PredictionBar<T extends Object> extends StatelessWidget {
   final Widget Function(T _) itemBuilder;
   final BoxDecoration decorationBar;
   final InputDecoration? decorationTextInput;
+  final ButtonStyle? validateButtonStyle;
 
   final TextEditingController _textEditingController = TextEditingController();
   TextEditingValue get _controllerValue => _textEditingController.value;
@@ -54,7 +56,7 @@ class PredictionBar<T extends Object> extends StatelessWidget {
                 onSuggestionSelected(selected);
               }
             },
-            style: ElevatedButton.styleFrom(primary: const Color(0xFF9DD14B), shape: const CircleBorder(), padding: const EdgeInsets.all(20)),
+            style: validateButtonStyle,
           )
         ],
       ),
@@ -107,7 +109,7 @@ class PredictionBar<T extends Object> extends StatelessWidget {
             padding: paddingListResults,
             itemCount: options.length,
             itemBuilder: (BuildContext context, int index) {
-              return options.isNotEmpty ? itemBuilder(options.elementAt(index)) : const SizedBox();
+              return itemBuilder(options.elementAt(index));
             },
           ),
         ),

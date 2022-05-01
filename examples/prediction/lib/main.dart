@@ -28,19 +28,12 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(title: Text(title)),
       body: PredictionBar<Object>(
         mainAxisAlignment: MainAxisAlignment.center,
-        fetchSuggestions: (String _) => [],
-        decorationBar: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
-        decorationTextInput: const InputDecoration(
-          prefixIcon: Icon(
-            Icons.search,
-            color: Color(0xFF9DD14B),
-          ),
-          border: InputBorder.none,
-        ),
+        fetchSuggestions: (_) => ['Test', 0, 01110010],
+        decorationBar: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(25)),
+        decorationTextInput: const InputDecoration(border: InputBorder.none, prefixIcon: Icon(Icons.search)),
+        itemBuilder: (_) => Text(_.toString()),
         onSuggestionSelected: (_) {},
-        itemBuilder: (Object _) {
-          return Text(_.toString());
-        },
+        validateButtonStyle: ElevatedButton.styleFrom(shape: const CircleBorder(), padding: const EdgeInsets.all(15)),
       ),
     );
   }
