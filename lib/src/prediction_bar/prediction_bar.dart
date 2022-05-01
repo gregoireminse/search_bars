@@ -23,7 +23,7 @@ class PredictionBar<T extends Object> extends StatelessWidget {
   final EdgeInsets paddingListResults;
   final MainAxisAlignment mainAxisAlignment;
   final double width;
-  final Widget Function(Object _) itemBuilder;
+  final Widget Function(T _) itemBuilder;
   final BoxDecoration decorationBar;
   final InputDecoration? decorationTextInput;
 
@@ -48,9 +48,11 @@ class PredictionBar<T extends Object> extends StatelessWidget {
           ElevatedButton(
             child: const Icon(Icons.arrow_forward, color: Colors.white),
             onPressed: () async {
-              T selected = (await _optionsBuilder(_controllerValue)).elementAt(0);
-              _textEditingController.text = _displayStringForOption(selected);
-              onSuggestionSelected(selected);
+              if ((await _optionsBuilder(_controllerValue)).isNotEmpty) {
+                T selected = (await _optionsBuilder(_controllerValue)).elementAt(0);
+                _textEditingController.text = _displayStringForOption(selected);
+                onSuggestionSelected(selected);
+              }
             },
             style: ElevatedButton.styleFrom(primary: const Color(0xFF9DD14B), shape: const CircleBorder(), padding: const EdgeInsets.all(20)),
           )
@@ -105,7 +107,7 @@ class PredictionBar<T extends Object> extends StatelessWidget {
             padding: paddingListResults,
             itemCount: options.length,
             itemBuilder: (BuildContext context, int index) {
-              return itemBuilder(options.elementAt(index));
+              return options.isNotEmpty ? itemBuilder(options.elementAt(index)) : const SizedBox();
             },
           ),
         ),
