@@ -24,7 +24,6 @@ class PredictionBar<T extends Object> extends StatelessWidget {
   final EdgeInsets paddingListResults;
   final MainAxisAlignment mainAxisAlignment;
   final double width;
-  final Widget Function(T _) itemBuilder;
   final BoxDecoration decorationBar;
   final InputDecoration? decorationTextInput;
   final ButtonStyle? validateButtonStyle;
@@ -36,6 +35,7 @@ class PredictionBar<T extends Object> extends StatelessWidget {
 
   final FutureOr<List<T>> Function(String _) fetchSuggestions;
   final Function(T _) onSuggestionSelected;
+  final Widget Function(T _, Function() __) itemBuilder;
 
   String _displayStringForOption(T _) => _.toString();
 
@@ -109,7 +109,9 @@ class PredictionBar<T extends Object> extends StatelessWidget {
             padding: paddingListResults,
             itemCount: options.length,
             itemBuilder: (BuildContext context, int index) {
-              return itemBuilder(options.elementAt(index));
+              T option = options.elementAt(index);
+
+              return itemBuilder(option, () => onSelected(option));
             },
           ),
         ),

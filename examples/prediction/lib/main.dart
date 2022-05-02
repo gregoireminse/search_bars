@@ -26,12 +26,12 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: PredictionBar<Object>(
-        mainAxisAlignment: MainAxisAlignment.center,
-        fetchSuggestions: (_) => ['Test', 0, 01110010],
+      body: PredictionBar(
         decorationBar: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(25)),
         decorationTextInput: const InputDecoration(border: InputBorder.none, prefixIcon: Icon(Icons.search)),
-        itemBuilder: (_) => Text(_.toString()),
+        fetchSuggestions: (_) => ['Test', 0, 01110010],
+        itemBuilder: (_, Function() __) => ListTile(title: Text(_.toString()), onTap: __),
+        mainAxisAlignment: MainAxisAlignment.center,
         onSuggestionSelected: (_) {},
         validateButtonStyle: ElevatedButton.styleFrom(shape: const CircleBorder(), padding: const EdgeInsets.all(15)),
       ),
